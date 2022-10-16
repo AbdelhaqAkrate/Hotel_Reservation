@@ -59,7 +59,7 @@ public class RoomServlet extends HttpServlet {
         int num = Integer.parseInt(req.getParameter("num"));
         roomRepository.deleteRoom(num);
         try {
-            resp.sendRedirect("Rooms");
+            resp.sendRedirect("");
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -68,7 +68,7 @@ public class RoomServlet extends HttpServlet {
         int num = Integer.parseInt(req.getParameter("num"));
         Room room = roomRepository.getRoom(num);
         req.setAttribute("room", room);
-        RequestDispatcher dispatcher = req.getRequestDispatcher("/Room/checkRoom.jsp");
+        RequestDispatcher dispatcher = req.getRequestDispatcher("jsp page where we gonna display the result");
         try {
             dispatcher.forward(req, resp);
         } catch (ServletException | IOException e) {
@@ -79,7 +79,7 @@ public class RoomServlet extends HttpServlet {
     private void getAllRooms(HttpServletRequest req, HttpServletResponse resp) {
         List<Room> rooms = roomRepository.getAllRooms();
         req.setAttribute("rooms", rooms);
-        RequestDispatcher dispatcher = req.getRequestDispatcher("/Room/Rooms.jsp");
+        RequestDispatcher dispatcher = req.getRequestDispatcher("jsp page where we gonna display the result");
         try {
             dispatcher.forward(req, resp);
         } catch (ServletException | IOException e) {
