@@ -27,6 +27,7 @@ public class RoomRepository {
     public void updateRoom(Room room) {
         try {
             PreparedStatement preparedStatement = connection.prepareStatement("UPDATE room SET idType = ?, status = ?, description = ? WHERE num = ?");
+            connection = DbConnecting.getConnection();
             preparedStatement.setInt(1, room.getIdType());
             preparedStatement.setString(2, room.getStatus());
             preparedStatement.setString(3, room.getDescription());
@@ -40,6 +41,7 @@ public class RoomRepository {
     public void deleteRoom(int num) {
         try {
             PreparedStatement preparedStatement = connection.prepareStatement("DELETE FROM room WHERE num = ?");
+            connection = DbConnecting.getConnection();
             preparedStatement.setInt(1, num);
             preparedStatement.executeUpdate();
         } catch (SQLException e) {
@@ -50,6 +52,7 @@ public class RoomRepository {
     public Room getRoom(int num) {
         try {
             PreparedStatement preparedStatement = connection.prepareStatement("SELECT * FROM room WHERE num = ?");
+            connection = DbConnecting.getConnection();
             preparedStatement.setInt(1, num);
             ResultSet resultSet = preparedStatement.executeQuery();
             if (resultSet.next()) {
@@ -80,6 +83,7 @@ public class RoomRepository {
     public boolean isRoomExist(int num) {
         try {
             PreparedStatement preparedStatement = connection.prepareStatement("SELECT * FROM room WHERE num = ?");
+            connection = DbConnecting.getConnection();
             preparedStatement.setInt(1, num);
             ResultSet resultSet = preparedStatement.executeQuery();
             if (resultSet.next()) {

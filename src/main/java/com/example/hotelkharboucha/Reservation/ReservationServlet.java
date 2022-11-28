@@ -1,5 +1,5 @@
 package com.example.hotelkharboucha.Reservation;
-
+import com.Database.DbConnecting.DbConnecting;
 import jakarta.servlet.RequestDispatcher;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServlet;
@@ -10,6 +10,8 @@ import java.io.IOException;
 import java.util.List;
 
 public class ReservationServlet extends HttpServlet {
+    ReservationService reservationService = new ReservationService();
+    
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         // super.doGet(req, resp);
@@ -21,48 +23,19 @@ public class ReservationServlet extends HttpServlet {
         switch(action)
         {
             case "Reservations":
-                getAllReservations(req, resp);
+                reservationService.getAllReservations(req, resp);
                 break;
             case "checkReservation":
-                checkReservation(req, resp);
+                reservationService.checkReservation(req, resp);
+                
                 break;
             default:
-                getAllReservations(req, resp);
+                reservationService.getAllReservations(req, resp);
                 break;
         }
     }
 
-    private void checkReservation(HttpServletRequest req, HttpServletResponse resp) {
-    int id = Integer.parseInt(req.getParameter("id"));
-    ReservationRepository reservationRepository = new ReservationRepository();
-    Reservation reservation = reservationRepository.getClientReservation(id);
-    req.setAttribute("reservation", reservation);
-    RequestDispatcher dispatcher = req.getRequestDispatcher("jsp page where the reservation will be displayed");
-    try {
-        dispatcher.forward(req, resp);
-    } catch (ServletException e) {
-        e.printStackTrace();
-    } catch (IOException e) {
-        e.printStackTrace();
-    }
-}
-    private void getAllReservations(HttpServletRequest req, HttpServletResponse resp) {
-
-        // get all reservations from the database
-        ReservationRepository reservationRepository = new ReservationRepository();
-        List<Reservation> reservations = reservationRepository.getAllReservation();
-        // add reservations to the request
-        req.setAttribute("reservations", reservations);
-        // send to the JSP page (view)
-        RequestDispatcher dispatcher = req.getRequestDispatcher("jsp page where the reservations will be displayed");
-        try {
-            dispatcher.forward(req, resp);
-        } catch (ServletException e) {
-            e.printStackTrace();
-        } catch (IOException e) {
-            e.printStackTrace();
-    }
-}
+  
     @Override
     protected void doDelete(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         // super.doDelete(req, resp);

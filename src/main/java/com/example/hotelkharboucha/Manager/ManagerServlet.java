@@ -15,13 +15,25 @@ public class ManagerServlet extends HttpServlet {
         }
         switch(action) {
             case "login":
-                login(request, response);
+                try {
+                    login(request, response);
+                } catch (Exception e) {
+                    throw new RuntimeException(e);
+                }
                 break;
             case "logout":
-                logout(request, response);
+                try {
+                    logout(request, response);
+                } catch (Exception e) {
+                    throw new RuntimeException(e);
+                }
                 break;
             default:
-                login(request, response);
+                try {
+                    login(request, response);
+                } catch (Exception e) {
+                    throw new RuntimeException(e);
+                }
                 break;
         }
     }
@@ -39,25 +51,25 @@ public class ManagerServlet extends HttpServlet {
                 
                 response.sendRedirect("jsp page where the manager will be displayed");
     }
-    private void login(HttpServletRequest request, HttpServletResponse response) {
+    private void login(HttpServletRequest request, HttpServletResponse response) throws Exception{
         String username = request.getParameter("username");
         String password = request.getParameter("password");
         ManagerRepository managerRepository = new ManagerRepository();
         boolean isExist = managerRepository.isExist(username);
         if(isExist) {
-            //login methode from manager repository
+
             Manager manager = managerRepository.login(username, password);
             HttpSession session = request.getSession();
             session.setAttribute("username", username);
-           // response.sendRedirect("redirect him to rooms page");
+            response.sendRedirect("redirect him to rooms page");
         } else {
-           // response.sendRedirect("keep him on login page");
+            response.sendRedirect("keep him on login page");
         }
     }
-    private void logout(HttpServletRequest request, HttpServletResponse response) {
+    private void logout(HttpServletRequest request, HttpServletResponse response)  throws Exception{
         HttpSession session = request.getSession();
         session.invalidate();
-        //response.sendRedirect("redirect him to login page");
+        response.sendRedirect("redirect him to login page");
     }
 
     

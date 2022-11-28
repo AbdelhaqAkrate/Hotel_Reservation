@@ -2,6 +2,8 @@ package com.example.hotelkharboucha.Manager;
 
 import java.sql.*;
 
+import com.Database.DbConnecting.DbConnecting;
+
 public class ManagerRepository {
     Connection connection = null;
     PreparedStatement preparedStatement = null;
@@ -13,6 +15,7 @@ public class ManagerRepository {
         boolean exist = false;
         try {
             PreparedStatement preparedStatement = connection.prepareStatement("SELECT * FROM manager WHERE username = ?");
+            connection = DbConnecting.getConnection();
             preparedStatement.setString(1, username);
             ResultSet resultSet = preparedStatement.executeQuery();
             if(resultSet.next()) {
@@ -29,6 +32,7 @@ public class ManagerRepository {
         try {
             if(isExist(username)) {
                 PreparedStatement preparedStatement = connection.prepareStatement("SELECT * FROM manager WHERE username = ? AND password = ?");
+                connection = DbConnecting.getConnection();
                 preparedStatement.setString(1, username);
                 preparedStatement.setString(2, password);
                 ResultSet resultSet = preparedStatement.executeQuery();
@@ -48,6 +52,7 @@ public class ManagerRepository {
             if(!isExist(manager.getUsername()))
             {
                 PreparedStatement preparedStatement = connection.prepareStatement("INSERT INTO manager (username,password) VALUES(?, ?)");
+                connection = DbConnecting.getConnection();
                 preparedStatement.setString(1, manager.getUsername());
                 preparedStatement.setString(2, manager.getPassword());
                 preparedStatement.executeUpdate();

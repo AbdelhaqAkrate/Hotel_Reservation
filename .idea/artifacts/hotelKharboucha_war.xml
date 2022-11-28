@@ -1,14 +1,14 @@
 <component name="ArtifactManager">
-  <artifact type="war" name="hotelKharboucha:war">
-    <output-path>$PROJECT_DIR$/target</output-path>
+  <artifact type="war" name="HotelKharboucha:war">
+    <output-path>$PROJECT_DIR$/HotelKharboucha/target</output-path>
     <properties id="maven-jee-properties">
       <options>
-        <module>hotelKharboucha</module>
+        <module>HotelKharboucha</module>
         <packaging>war</packaging>
       </options>
     </properties>
-    <root id="archive" name="hotelKharboucha-1.0-SNAPSHOT.war">
-      <element id="artifact" artifact-name="hotelKharboucha:war exploded" />
+    <root id="archive" name="HotelKharboucha-1.0-SNAPSHOT.war">
+      <element id="artifact" artifact-name="HotelKharboucha:war exploded" />
     </root>
   </artifact>
 </component>
